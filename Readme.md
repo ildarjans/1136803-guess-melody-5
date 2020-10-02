@@ -1,7 +1,7 @@
 # Учебный проект «Угадай мелодию» [![Build status][travis-image]][travis-url]
 
 * Студент: [Ильдар Шаймарданов](https://up.htmlacademy.ru/react/5/user/1136803).
-* Наставник: `Неизвестно`.
+* Наставник: [Раиль Сахавиев](https://htmlacademy.ru/profile/id1331891).
 
 ---
 
