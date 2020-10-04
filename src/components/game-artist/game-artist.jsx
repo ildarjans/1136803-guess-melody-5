@@ -1,7 +1,7 @@
 import React from 'react';
 import {CircleStyle} from '../../const.js';
 
-const QuestionArtistScreen = () => {
+const GameArtist = () => {
   return (
     <section className="game game--artist">
       <header className="game__header">
@@ -85,4 +85,4 @@ const QuestionArtistScreen = () => {
   );
 };
 
-export default QuestionArtistScreen;
+export default GameArtist;

@@ -2,7 +2,7 @@ import React from 'react';
 import {CircleStyle} from '../../const.js';
 
 
-const QuestionGenreScreen = () => {
+const GameGenre = () => {
   return (
     <section className="game game--genre">
       <header className="game__header">
@@ -104,4 +104,4 @@ const QuestionGenreScreen = () => {
   );
 };
 
-export default QuestionGenreScreen;
+export default GameGenre;

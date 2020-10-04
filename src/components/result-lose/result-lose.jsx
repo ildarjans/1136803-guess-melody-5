@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ResultLoseScreen = () => {
+const ResultLose = () => {
   return (
     <section className="result">
       <div className="result__logo">
@@ -15,4 +15,4 @@ const ResultLoseScreen = () => {
   );
 };
 
-export default ResultLoseScreen;
+export default ResultLose;

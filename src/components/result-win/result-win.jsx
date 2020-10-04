@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ResultWinScreen = () => {
+const ResultWin = () => {
   return (
     <section className="result">
       <div className="result__logo">
@@ -13,4 +13,4 @@ const ResultWinScreen = () => {
   );
 };
 
-export default ResultWinScreen;
+export default ResultWin;
