@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
-import WelcomeScreen from "../welcome-screen/welcome-screen";
-import LoginScreen from "../login-screen/login-screen";
-import ResultLoseScreen from "../result-lose-screen/result-lose-screen";
-import ResultWinScreen from "../result-win-screen/result-win-screen";
-import QuestionArtistScreen from "../question-artist-screen/question-artist-screen";
-import QuestionGenreScreen from "../question-genre-screen/question-genre-screen";
+import Welcome from "../welcome/welcome";
+import Login from "../login/login";
+import ResultLose from "../result-lose/result-lose";
+import ResultWin from "../result-win/result-win";
+import GameArtist from "../game-artist/game-artist";
+import GameGenre from "../game-genre/game-genre";
 
 
 const App = (props) => {
@@ -15,22 +15,22 @@ const App = (props) => {
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <WelcomeScreen errorsCount={errorsCount}/>
+          <Welcome errorsCount={errorsCount}/>
         </Route>
         <Route exact path="/login">
-          <LoginScreen/>
+          <Login/>
         </Route>
         <Route exact path="/result">
-          <ResultWinScreen/>
+          <ResultWin/>
         </Route>
         <Route exact path="/lose">
-          <ResultLoseScreen/>
+          <ResultLose/>
         </Route>
         <Route exact path="/dev-genre">
-          <QuestionGenreScreen/>
+          <GameGenre/>
         </Route>
         <Route exact path="/dev-artist">
-          <QuestionArtistScreen/>
+          <GameArtist/>
         </Route>
       </Switch>
     </BrowserRouter>
