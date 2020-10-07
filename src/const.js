@@ -1,5 +1,9 @@
-export const CircleStyle = {
-  filter: `url(#blur)`,
-  transform: `rotate(-90deg) scaleY(-1)`,
-  transformOrigin: `center`,
+export const GameType = {
+  GENRE: `genre`,
+  ARTIST: `artist`
 };
+
+export const Settings = {
+  ERROR_COUNT: 3,
+};
+
