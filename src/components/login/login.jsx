@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Login = () => {
+export const Login = () => {
   return (
     <section className="login">
       <div className="login__logo">
@@ -24,5 +24,3 @@ const Login = () => {
     </section>
   );
 };
-
-export default Login;

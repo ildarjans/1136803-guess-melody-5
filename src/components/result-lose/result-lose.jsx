@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ResultLose = () => {
+export const ResultLose = () => {
   return (
     <section className="result">
       <div className="result__logo">
@@ -14,5 +14,3 @@ const ResultLose = () => {
     </section>
   );
 };
-
-export default ResultLose;

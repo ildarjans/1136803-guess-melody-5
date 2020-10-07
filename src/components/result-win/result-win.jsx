@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ResultWin = () => {
+export const ResultWin = () => {
   return (
     <section className="result">
       <div className="result__logo">
@@ -12,5 +12,3 @@ const ResultWin = () => {
     </section>
   );
 };
-
-export default ResultWin;
