@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
-const WelcomeScreen = (props) => {
+const Welcome = (props) => {
   const {errorsCount} = props;
 
   return (
@@ -24,8 +24,8 @@ const WelcomeScreen = (props) => {
   );
 };
 
-WelcomeScreen.propTypes = {
+Welcome.propTypes = {
   errorsCount: PropTypes.number.isRequired
 };
 
-export default WelcomeScreen;
+export default Welcome;
