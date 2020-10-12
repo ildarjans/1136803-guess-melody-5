@@ -1,28 +1,46 @@
-import React, {PureComponent} from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import {Link} from "react-router-dom";
+import PropTypes from "prop-types";
 import {CircleStyle} from "../../styles/circle-style";
-import {GameType} from "../../const.js";
+import {GameAnswer} from "../game-answer/game-answer";
+import {genreQuestionPropTypes} from "../genre-prop-types/genre-quenstion";
 
-
-export class GameGenre extends PureComponent {
+export class GameGenre extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      answers: [false, false, false, false],
+      answers: [
+        false,
+        false,
+        false,
+        false,
+      ],
     };
+
+    this._onChangeAnswer = this._onChangeAnswer.bind(this);
+    this._onSubmit = this._onSubmit.bind(this);
+  }
+
+  _onChangeAnswer(answers) {
+    this.setState(answers);
+  }
+
+  _onSubmit(evt) {
+    evt.preventDefault();
+    const {onAnswer, question} = this.props;
+    onAnswer(this.state.answers, question);
   }
 
   render() {
     const {answers: userAnswers} = this.state;
-    const {onAnswer, question} = this.props;
-    const {genre, answers} = question;
+    const {genre, answers} = this.props.question;
     return (
       <section className="game game--genre">
         <header className="game__header">
-          <a className="game__back" href="#">
+          <Link className="game__back" to="/">
             <span className="visually-hidden">Сыграть ещё раз</span>
             <img className="game__logo" src="img/melody-logo-ginger.png" alt="Угадай мелодию"/>
-          </a>
+          </Link>
 
           <svg xmlns="http://www.w3.org/2000/svg" className="timer" viewBox="0 0 780 780">
             <circle
@@ -35,9 +53,9 @@ export class GameGenre extends PureComponent {
           </svg>
 
           <div className="game__mistakes">
-            <div className="wrong"></div>
-            <div className="wrong"></div>
-            <div className="wrong"></div>
+            <div className="wrong"/>
+            <div className="wrong"/>
+            <div className="wrong"/>
           </div>
         </header>
 
@@ -45,39 +63,21 @@ export class GameGenre extends PureComponent {
           <h2 className="game__title">Выберите {genre} мелодию</h2>
           <form
             className="game__tracks"
-            onSubmit={(evt) => {
-              evt.preventDefault();
-              onAnswer(this.state.answers, question);
-            }}
+            onSubmit={this._onSubmit}
           >
             {answers.map((answer, index) => (
               <div className="track" key={`${index}-${answer.src}`}>
-                <button className="track__button track__button--play" type="button"></button>
+                <button className="track__button track__button--play" type="button"/>
                 <div className="track__status">
-                  <audio src={answer.src}></audio>
+                  <audio src={answer.src}/>
                 </div>
-                <div className="game__answer">
-                  <input
-                    className="game__input visually-hidden"
-                    type="checkbox"
-                    name="answer"
-                    value={`answer-${index}`}
-                    id={`answer-${index}`}
-                    checked={userAnswers[index]}
-                    onChange={(evt) => {
-                      const value = evt.target.checked;
-                      this.setState({
-                        answers: [
-                          ...userAnswers.slice(0, index),
-                          value,
-                          ...userAnswers.slice(index + 1),
-                        ],
-                      });
 
-                    }}
-                  />
-                  <label className="game__check" htmlFor={`answer-${index}`}>Отметить</label>
-                </div>
+                <GameAnswer
+                  userAnswers={userAnswers}
+                  index={index}
+                  onChangeAnswer={this._onChangeAnswer}
+                />
+
               </div>
             ))
             }
@@ -97,12 +97,5 @@ export class GameGenre extends PureComponent {
 
 GameGenre.propTypes = {
   onAnswer: PropTypes.func.isRequired,
-  question: PropTypes.shape({
-    type: PropTypes.oneOf([GameType.ARTIST, GameType.GENRE]).isRequired,
-    genre: PropTypes.string.isRequired,
-    answers: PropTypes.arrayOf(PropTypes.shape({
-      src: PropTypes.string.isRequired,
-      genre: PropTypes.string.isRequired,
-    })).isRequired,
-  }),
+  question: genreQuestionPropTypes.isRequired,
 };

@@ -1,17 +1,12 @@
 import React from "react";
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import {BrowserRouter, Switch, Route} from "react-router-dom";
 import PropTypes from "prop-types";
 import {Welcome} from "../welcome/welcome";
 import {Login} from "../login/login";
-import {ResultLose} from "../result-lose/result-lose";
-import {ResultWin} from "../result-win/result-win";
-import {GameArtist} from "../game-artist/game-artist";
-import {GameGenre} from "../game-genre/game-genre";
+import {Result} from "../result/result";
 import {Game} from "../game/game";
 
-
-export const App = ({errorsCount, questions}) => {
-  const [genreQuestion, artistQuestion] = questions;
+export const App = ({questions}) => {
   return (
     <BrowserRouter>
       <Switch>
@@ -20,7 +15,6 @@ export const App = ({errorsCount, questions}) => {
           render={({history}) => {
             return (
               <Welcome
-                errorsCount={errorsCount}
                 onWelcomeButtonClick={() => history.push(`/game`)}
               />
             );
@@ -30,26 +24,13 @@ export const App = ({errorsCount, questions}) => {
           <Login/>
         </Route>
         <Route exact path="/result">
-          <ResultWin/>
+          <Result isWin={true}/>
         </Route>
         <Route exact path="/lose">
-          <ResultLose/>
-        </Route>
-        <Route exact path="/dev-genre">
-          <GameGenre
-            question={genreQuestion}
-            onAnswer={() => {}}
-          />
-        </Route>
-        <Route exact path="/dev-artist">
-          <GameArtist
-            question={artistQuestion}
-            onAnswer={() => {}}
-          />
+          <Result isWin={false}/>
         </Route>
         <Route exact path="/game">
           <Game
-            errorsCount={errorsCount}
             questions={questions}
           />
         </Route>
@@ -59,6 +40,5 @@ export const App = ({errorsCount, questions}) => {
 };
 
 App.propTypes = {
-  errorsCount: PropTypes.number.isRequired,
   questions: PropTypes.array.isRequired,
 };

@@ -1,14 +1,21 @@
-import React, {PureComponent} from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import {Link} from "react-router-dom";
+import PropTypes from "prop-types";
 import {CircleStyle} from "../../styles/circle-style";
-import {GameType} from "../../const.js";
+import {ArtistInput} from "../artist-input/artist-input";
+import {artistQuestionPropTypes} from "../artist-prop-types/artist-question";
 
-export class GameArtist extends PureComponent {
+export class GameArtist extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      answers: [false, false, false, false],
+      answers: [
+        false,
+        false,
+        false,
+        false,
+      ],
     };
   }
 
@@ -18,10 +25,10 @@ export class GameArtist extends PureComponent {
     return (
       <section className="game game--artist">
         <header className="game__header">
-          <a className="game__back" href="#">
+          <Link className="game__back" to="/">
             <span className="visually-hidden">Сыграть ещё раз</span>
             <img className="game__logo" src="/img/melody-logo-ginger.png" alt="Угадай мелодию"/>
-          </a>
+          </Link>
 
           <svg xmlns="http://www.w3.org/2000/svg" className="timer" viewBox="0 0 780 780">
             <circle
@@ -33,9 +40,9 @@ export class GameArtist extends PureComponent {
           </svg>
 
           <div className="game__mistakes">
-            <div className="wrong"></div>
-            <div className="wrong"></div>
-            <div className="wrong"></div>
+            <div className="wrong"/>
+            <div className="wrong"/>
+            <div className="wrong"/>
           </div>
         </header>
 
@@ -43,9 +50,9 @@ export class GameArtist extends PureComponent {
           <h2 className="game__title">Кто исполняет эту песню?</h2>
           <div className="game__track">
             <div className="track">
-              <button className="track__button track__button--play" type="button"></button>
+              <button className="track__button track__button--play" type="button"/>
               <div className="track__status">
-                <audio src={song.src}></audio>
+                <audio src={song.src}/>
               </div>
             </div>
           </div>
@@ -53,23 +60,13 @@ export class GameArtist extends PureComponent {
           <form className="game__artist">
             {
               answers.map((answer, index) => (
-                <div className="artist" key={`${index}-${answer.picture}`}>
-                  <input
-                    className="artist__input visually-hidden"
-                    type="radio"
-                    name="answer"
-                    value={`answer-${index}`}
-                    id={`answer-${index}`}
-                    onChange={(evt) => {
-                      evt.preventDefault();
-                      onAnswer(question, answer);
-                    }}
-                  />
-                  <label className="artist__name" htmlFor={`answer-${index}`}>
-                    <img className="artist__picture" src={answer.picture} alt={answer.artist}/>
-                    {answer.artist}
-                  </label>
-                </div>
+                <ArtistInput
+                  key={`${answer.picture}-${index}`}
+                  index={index}
+                  onAnswer={onAnswer}
+                  answer={answer}
+                  question={question}
+                />
               ))
             }
 
@@ -82,15 +79,5 @@ export class GameArtist extends PureComponent {
 
 GameArtist.propTypes = {
   onAnswer: PropTypes.func.isRequired,
-  question: PropTypes.shape({
-    type: PropTypes.oneOf([GameType.ARTIST, GameType.GENRE]).isRequired,
-    song: PropTypes.shape({
-      src: PropTypes.string.isRequired,
-      artist: PropTypes.string.isRequired,
-    }).isRequired,
-    answers: PropTypes.arrayOf(PropTypes.shape({
-      artist: PropTypes.string.isRequired,
-      picture: PropTypes.string.isRequired,
-    })).isRequired,
-  }),
+  question: artistQuestionPropTypes.isRequired,
 };
