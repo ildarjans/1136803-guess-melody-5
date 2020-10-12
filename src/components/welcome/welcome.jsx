@@ -1,7 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
+import {Settings} from "../../const.js";
 
-export const Welcome = ({errorsCount, onWelcomeButtonClick}) => {
+export const Welcome = ({onWelcomeButtonClick}) => {
   return (
     <section className="welcome">
       <div className="welcome__logo">
@@ -19,7 +20,7 @@ export const Welcome = ({errorsCount, onWelcomeButtonClick}) => {
       <p className="welcome__text">Правила просты:</p>
       <ul className="welcome__rules-list">
         <li>Нужно ответить на все вопросы.</li>
-        <li>Можно допустить {errorsCount} ошибки.</li>
+        <li>Можно допустить {Settings.MAX_ERROR_COUNT} ошибки.</li>
       </ul>
       <p className="welcome__text">Удачи!</p>
     </section>
@@ -27,6 +28,5 @@ export const Welcome = ({errorsCount, onWelcomeButtonClick}) => {
 };
 
 Welcome.propTypes = {
-  errorsCount: PropTypes.number.isRequired,
   onWelcomeButtonClick: PropTypes.func.isRequired,
 };
