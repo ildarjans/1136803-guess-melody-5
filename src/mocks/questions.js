@@ -1,6 +1,6 @@
 const AVATAR_URL = `https://api.adorable.io/avatars/128`;
 
-export default [
+export const questions = [
   {
     type: `genre`,
     genre: `rock`,
