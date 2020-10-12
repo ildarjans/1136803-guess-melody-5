@@ -4,6 +4,6 @@ export const GameType = {
 };
 
 export const Settings = {
-  ERROR_COUNT: 3,
+  MAX_ERROR_COUNT: 3,
 };
 
