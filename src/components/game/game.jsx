@@ -4,6 +4,8 @@ import {Redirect} from "react-router-dom";
 import {GameArtist} from "../game-artist/game-artist";
 import {GameGenre} from "../game-genre/game-genre";
 import {GameType} from "../../const";
+import {GenreQuestionPropTypes} from "../genre-prop-types/genre-quenstion";
+import {ArtistQuestionPropTypes} from "../artist-prop-types/artist-question";
 
 export class Game extends React.PureComponent {
   constructor(props) {
@@ -13,10 +15,10 @@ export class Game extends React.PureComponent {
       step: 0,
     };
 
-    this._onAnswer = this._onAnswer.bind(this);
+    this._handleAnswer = this._handleAnswer.bind(this);
   }
 
-  _onAnswer() {
+  _handleAnswer() {
     this.setState((prevState) => ({
       step: prevState.step + 1,
     }));
@@ -38,14 +40,14 @@ export class Game extends React.PureComponent {
         return (
           <GameGenre
             question={question}
-            onAnswer={this._onAnswer}
+            onAnswer={this._handleAnswer}
           />
         );
       case GameType.ARTIST:
         return (
           <GameArtist
             question={question}
-            onAnswer={this._onAnswer}
+            onAnswer={this._handleAnswer}
           />
         );
     }
@@ -56,5 +58,8 @@ export class Game extends React.PureComponent {
 }
 
 Game.propTypes = {
-  questions: PropTypes.array.isRequired,
+  questions: PropTypes.arrayOf(
+      PropTypes.oneOfType(
+          [GenreQuestionPropTypes, ArtistQuestionPropTypes])
+  ).isRequired
 };
