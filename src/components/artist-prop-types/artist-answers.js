@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-export const artistAnswerPropTypes = PropTypes.shape({
+export const ArtistAnswerPropTypes = PropTypes.shape({
   artist: PropTypes.string.isRequired,
   picture: PropTypes.string.isRequired,
 });

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {artistQuestionPropTypes} from '../artist-prop-types/artist-question';
-import {artistAnswerPropTypes} from '../artist-prop-types/artist-answers';
+import {ArtistQuestionPropTypes} from '../artist-prop-types/artist-question';
+import {ArtistAnswerPropTypes} from '../artist-prop-types/artist-answers';
 
 export const ArtistInput = ({onAnswer, answer, question, index}) => {
-  const onChange = (evt) => {
+  const handleChange = (evt) => {
     evt.preventDefault();
     onAnswer(question, answer);
   };
@@ -17,7 +17,7 @@ export const ArtistInput = ({onAnswer, answer, question, index}) => {
         name="answer"
         value={`answer-${index}`}
         id={`answer-${index}`}
-        onChange={onChange}
+        onChange={handleChange}
       />
       <label className="artist__name" htmlFor={`answer-${index}`}>
         <img className="artist__picture" src={answer.picture} alt={answer.artist}/>
@@ -30,6 +30,6 @@ export const ArtistInput = ({onAnswer, answer, question, index}) => {
 ArtistInput.propTypes = {
   onAnswer: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
-  question: artistQuestionPropTypes,
-  answer: artistAnswerPropTypes.isRequired,
+  question: ArtistQuestionPropTypes.isRequired,
+  answer: ArtistAnswerPropTypes.isRequired,
 };

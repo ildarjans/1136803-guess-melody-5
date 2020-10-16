@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-export const GameAnswer = ({onChangeAnswer, userAnswers, index}) => {
+export const GameAnswer = ({onChangeAnswer, answers, index}) => {
   const onChange = (evt) => {
     onChangeAnswer({
       answers: [
-        ...userAnswers.slice(0, index),
+        ...answers.slice(0, index),
         evt.target.checked,
-        ...userAnswers.slice(index + 1),
+        ...answers.slice(index + 1),
       ],
     });
   };
@@ -20,7 +20,7 @@ export const GameAnswer = ({onChangeAnswer, userAnswers, index}) => {
         name="answer"
         value={`answer-${index}`}
         id={`answer-${index}`}
-        checked={userAnswers[index]}
+        checked={answers[index]}
         onChange={onChange}
       />
       <label className="game__check" htmlFor={`answer-${index}`}>Отметить</label>
@@ -31,5 +31,5 @@ export const GameAnswer = ({onChangeAnswer, userAnswers, index}) => {
 GameAnswer.propTypes = {
   index: PropTypes.number.isRequired,
   onChangeAnswer: PropTypes.func.isRequired,
-  userAnswers: PropTypes.arrayOf(PropTypes.bool.isRequired).isRequired,
+  answers: PropTypes.arrayOf(PropTypes.bool.isRequired).isRequired,
 };

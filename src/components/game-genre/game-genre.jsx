@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {CircleStyle} from "../../styles/circle-style";
 import {GameAnswer} from "../game-answer/game-answer";
-import {genreQuestionPropTypes} from "../genre-prop-types/genre-quenstion";
+import {GenreQuestionPropTypes} from "../genre-prop-types/genre-quenstion";
 
 export class GameGenre extends React.PureComponent {
   constructor(props) {
@@ -17,23 +17,23 @@ export class GameGenre extends React.PureComponent {
       ],
     };
 
-    this._onChangeAnswer = this._onChangeAnswer.bind(this);
-    this._onSubmit = this._onSubmit.bind(this);
+    this._handleAnswerChange = this._handleAnswerChange.bind(this);
+    this._handleSubmit = this._handleSubmit.bind(this);
   }
 
-  _onChangeAnswer(answers) {
+  _handleAnswerChange(answers) {
     this.setState(answers);
   }
 
-  _onSubmit(evt) {
+  _handleSubmit(evt) {
     evt.preventDefault();
     const {onAnswer, question} = this.props;
     onAnswer(this.state.answers, question);
   }
 
   render() {
-    const {answers: userAnswers} = this.state;
-    const {genre, answers} = this.props.question;
+    const {answers} = this.state;
+    const {question} = this.props;
     return (
       <section className="game game--genre">
         <header className="game__header">
@@ -60,12 +60,12 @@ export class GameGenre extends React.PureComponent {
         </header>
 
         <section className="game__screen">
-          <h2 className="game__title">Выберите {genre} мелодию</h2>
+          <h2 className="game__title">Выберите {question.genre} мелодию</h2>
           <form
             className="game__tracks"
-            onSubmit={this._onSubmit}
+            onSubmit={this._handleSubmit}
           >
-            {answers.map((answer, index) => (
+            {question.answers.map((answer, index) => (
               <div className="track" key={`${index}-${answer.src}`}>
                 <button className="track__button track__button--play" type="button"/>
                 <div className="track__status">
@@ -73,9 +73,9 @@ export class GameGenre extends React.PureComponent {
                 </div>
 
                 <GameAnswer
-                  userAnswers={userAnswers}
+                  answers={answers}
                   index={index}
-                  onChangeAnswer={this._onChangeAnswer}
+                  onChangeAnswer={this._handleAnswerChange}
                 />
 
               </div>
@@ -97,5 +97,5 @@ export class GameGenre extends React.PureComponent {
 
 GameGenre.propTypes = {
   onAnswer: PropTypes.func.isRequired,
-  question: genreQuestionPropTypes.isRequired,
+  question: GenreQuestionPropTypes.isRequired,
 };

@@ -1,12 +1,12 @@
 import PropTypes from "prop-types";
 import {GameType} from "../../const";
-import {genreAnswerPropTypes} from "./genre-answer";
+import {GenreAnswerPropTypes} from "./genre-answer";
 
-export const genreQuestionPropTypes = PropTypes.shape({
+export const GenreQuestionPropTypes = PropTypes.shape({
   type: PropTypes.oneOf([
     GameType.ARTIST,
     GameType.GENRE,
   ]).isRequired,
   genre: PropTypes.string.isRequired,
-  answers: PropTypes.arrayOf(genreAnswerPropTypes).isRequired,
+  answers: PropTypes.arrayOf(GenreAnswerPropTypes).isRequired,
 });
