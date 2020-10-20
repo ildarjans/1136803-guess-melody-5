@@ -1,107 +1,101 @@
-import React from 'react';
-import {CircleStyle} from '../../const.js';
+import React from "react";
+import {Link} from "react-router-dom";
+import PropTypes from "prop-types";
+import {CircleStyle} from "../../styles/circle-style";
+import {GameAnswer} from "../game-answer/game-answer";
+import {GenreQuestionPropTypes} from "../genre-prop-types/genre-quenstion";
 
+export class GameGenre extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      answers: [
+        false,
+        false,
+        false,
+        false,
+      ],
+    };
 
-const GameGenre = () => {
-  return (
-    <section className="game game--genre">
-      <header className="game__header">
-        <a className="game__back" href="#">
-          <span className="visually-hidden">Сыграть ещё раз</span>
-          <img className="game__logo" src="img/melody-logo-ginger.png" alt="Угадай мелодию"/>
-        </a>
+    this._handleAnswerChange = this._handleAnswerChange.bind(this);
+    this._handleSubmit = this._handleSubmit.bind(this);
+  }
 
-        <svg xmlns="http://www.w3.org/2000/svg" className="timer" viewBox="0 0 780 780">
-          <circle
-            className="timer__line"
-            cx="390"
-            cy="390"
-            r="370"
-            style={CircleStyle}
-          />
-        </svg>
+  _handleAnswerChange(answers) {
+    this.setState(answers);
+  }
 
-        <div className="game__mistakes">
-          <div className="wrong"></div>
-          <div className="wrong"></div>
-          <div className="wrong"></div>
-        </div>
-      </header>
+  _handleSubmit(evt) {
+    evt.preventDefault();
+    const {onAnswer, question} = this.props;
+    onAnswer(this.state.answers, question);
+  }
 
-      <section className="game__screen">
-        <h2 className="game__title">Выберите инди-рок треки</h2>
-        <form className="game__tracks">
-          <div className="track">
-            <button className="track__button track__button--play" type="button"></button>
-            <div className="track__status">
-              <audio></audio>
-            </div>
-            <div className="game__answer">
-              <input
-                className="game__input visually-hidden"
-                type="checkbox"
-                name="answer"
-                value="answer-1"
-                id="answer-1"/>
-              <label className="game__check" htmlFor="answer-1">Отметить</label>
-            </div>
+  render() {
+    const {answers} = this.state;
+    const {question} = this.props;
+    return (
+      <section className="game game--genre">
+        <header className="game__header">
+          <Link className="game__back" to="/">
+            <span className="visually-hidden">Сыграть ещё раз</span>
+            <img className="game__logo" src="img/melody-logo-ginger.png" alt="Угадай мелодию"/>
+          </Link>
+
+          <svg xmlns="http://www.w3.org/2000/svg" className="timer" viewBox="0 0 780 780">
+            <circle
+              className="timer__line"
+              cx="390"
+              cy="390"
+              r="370"
+              style={CircleStyle}
+            />
+          </svg>
+
+          <div className="game__mistakes">
+            <div className="wrong"/>
+            <div className="wrong"/>
+            <div className="wrong"/>
           </div>
+        </header>
 
-          <div className="track">
-            <button className="track__button track__button--play" type="button"></button>
-            <div className="track__status">
-              <audio></audio>
-            </div>
-            <div className="game__answer">
-              <input
-                className="game__input visually-hidden"
-                type="checkbox"
-                name="answer"
-                value="answer-1"
-                id="answer-2"/>
-              <label className="game__check" htmlFor="answer-2">Отметить</label>
-            </div>
-          </div>
+        <section className="game__screen">
+          <h2 className="game__title">Выберите {question.genre} мелодию</h2>
+          <form
+            className="game__tracks"
+            onSubmit={this._handleSubmit}
+          >
+            {question.answers.map((answer, index) => (
+              <div className="track" key={`${index}-${answer.src}`}>
+                <button className="track__button track__button--play" type="button"/>
+                <div className="track__status">
+                  <audio src={answer.src}/>
+                </div>
 
-          <div className="track">
-            <button className="track__button track__button--pause" type="button"></button>
-            <div className="track__status">
-              <audio></audio>
-            </div>
-            <div className="game__answer">
-              <input
-                className="game__input visually-hidden"
-                type="checkbox"
-                name="answer"
-                value="answer-1"
-                id="answer-3"
-              />
-              <label className="game__check" htmlFor="answer-3">Отметить</label>
-            </div>
-          </div>
+                <GameAnswer
+                  answers={answers}
+                  index={index}
+                  onChangeAnswer={this._handleAnswerChange}
+                />
 
-          <div className="track">
-            <button className="track__button track__button--play" type="button"></button>
-            <div className="track__status">
-              <audio></audio>
-            </div>
-            <div className="game__answer">
-              <input
-                className="game__input visually-hidden"
-                type="checkbox"
-                name="answer"
-                value="answer-1"
-                id="answer-4"
-              />
-              <label className="game__check" htmlFor="answer-4">Отметить</label>
-            </div>
-          </div>
+              </div>
+            ))
+            }
+            <button
+              className="game__submit button"
+              type="submit"
+            >
+              Ответить
+            </button>
 
-          <button className="game__submit button" type="submit">Ответить</button>
-        </form>
+          </form>
+        </section>
       </section>
-    </section>
-  );
-};
+    );
+  }
+}
 
-export default GameGenre;
+GameGenre.propTypes = {
+  onAnswer: PropTypes.func.isRequired,
+  question: GenreQuestionPropTypes.isRequired,
+};

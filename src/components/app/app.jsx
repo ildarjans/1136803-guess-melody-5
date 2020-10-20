@@ -1,36 +1,38 @@
 import React from "react";
+import {BrowserRouter, Switch, Route} from "react-router-dom";
 import PropTypes from "prop-types";
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
-import Welcome from "../welcome/welcome";
-import Login from "../login/login";
-import ResultLose from "../result-lose/result-lose";
-import ResultWin from "../result-win/result-win";
-import GameArtist from "../game-artist/game-artist";
-import GameGenre from "../game-genre/game-genre";
+import {Welcome} from "../welcome/welcome";
+import {Login} from "../login/login";
+import {Result} from "../result/result";
+import {Game} from "../game/game";
 
-
-const App = (props) => {
-  const {errorsCount} = props;
+export const App = ({questions}) => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/">
-          <Welcome errorsCount={errorsCount}/>
-        </Route>
+        <Route
+          exact path="/"
+          render={({history}) => {
+            return (
+              <Welcome
+                onWelcomeButtonClick={() => history.push(`/game`)}
+              />
+            );
+          }}
+        />
         <Route exact path="/login">
           <Login/>
         </Route>
         <Route exact path="/result">
-          <ResultWin/>
+          <Result isWin={true}/>
         </Route>
         <Route exact path="/lose">
-          <ResultLose/>
+          <Result isWin={false}/>
         </Route>
-        <Route exact path="/dev-genre">
-          <GameGenre/>
-        </Route>
-        <Route exact path="/dev-artist">
-          <GameArtist/>
+        <Route exact path="/game">
+          <Game
+            questions={questions}
+          />
         </Route>
       </Switch>
     </BrowserRouter>
@@ -38,7 +40,5 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  errorsCount: PropTypes.number.isRequired,
+  questions: PropTypes.array.isRequired,
 };
-
-export default App;
