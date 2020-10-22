@@ -3,9 +3,13 @@ import PropTypes from "prop-types";
 import {Redirect} from "react-router-dom";
 import {GameArtist} from "../game-artist/game-artist";
 import {GameGenre} from "../game-genre/game-genre";
-import {GameType} from "../../const";
+import {withAudioPlayer} from "../../hocs/with-audio-player";
 import {GenreQuestionPropTypes} from "../genre-prop-types/genre-quenstion";
 import {ArtistQuestionPropTypes} from "../artist-prop-types/artist-question";
+import {GameType} from "../../const";
+
+const GameGenreWrapped = withAudioPlayer(GameGenre);
+const GameArtistWrapped = withAudioPlayer(GameArtist);
 
 export class Game extends React.PureComponent {
   constructor(props) {
@@ -15,10 +19,10 @@ export class Game extends React.PureComponent {
       step: 0,
     };
 
-    this._handleAnswer = this._handleAnswer.bind(this);
+    this._handleClickAnswer = this._handleClickAnswer.bind(this);
   }
 
-  _handleAnswer() {
+  _handleClickAnswer() {
     this.setState((prevState) => ({
       step: prevState.step + 1,
     }));
@@ -38,16 +42,16 @@ export class Game extends React.PureComponent {
     switch (question.type) {
       case GameType.GENRE:
         return (
-          <GameGenre
+          <GameGenreWrapped
             question={question}
-            onAnswer={this._handleAnswer}
+            onAnswer={this._handleClickAnswer}
           />
         );
       case GameType.ARTIST:
         return (
-          <GameArtist
-            question={question}
-            onAnswer={this._handleAnswer}
+          <GameArtistWrapped
+            question={question}W
+            onAnswer={this._handleClickAnswer}
           />
         );
     }
@@ -60,6 +64,6 @@ export class Game extends React.PureComponent {
 Game.propTypes = {
   questions: PropTypes.arrayOf(
       PropTypes.oneOfType(
-          [GenreQuestionPropTypes, ArtistQuestionPropTypes])
+          [GenreQuestionPropTypes, ArtistQuestionPropTypes]).isRequired
   ).isRequired
 };
