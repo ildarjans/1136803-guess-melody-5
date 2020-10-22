@@ -4,7 +4,7 @@ import {ArtistQuestionPropTypes} from '../artist-prop-types/artist-question';
 import {ArtistAnswerPropTypes} from '../artist-prop-types/artist-answers';
 
 export const ArtistInput = ({onAnswer, answer, question, index}) => {
-  const handleChange = (evt) => {
+  const handleInputChange = (evt) => {
     evt.preventDefault();
     onAnswer(question, answer);
   };
@@ -17,7 +17,7 @@ export const ArtistInput = ({onAnswer, answer, question, index}) => {
         name="answer"
         value={`answer-${index}`}
         id={`answer-${index}`}
-        onChange={handleChange}
+        onChange={handleInputChange}
       />
       <label className="artist__name" htmlFor={`answer-${index}`}>
         <img className="artist__picture" src={answer.picture} alt={answer.artist}/>

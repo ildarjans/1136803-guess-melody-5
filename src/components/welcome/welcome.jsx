@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Settings} from "../../const.js";
 
-export const Welcome = ({onClickWelcomeButton}) => {
+export const Welcome = ({onWelcomeButtonClick}) => {
   return (
     <section className="welcome">
       <div className="welcome__logo">
@@ -11,7 +11,7 @@ export const Welcome = ({onClickWelcomeButton}) => {
 
       <button
         className="welcome__button"
-        onClick={onClickWelcomeButton}
+        onClick={onWelcomeButtonClick}
       >
         <span className="visually-hidden">Начать игру</span>
       </button>
@@ -28,5 +28,5 @@ export const Welcome = ({onClickWelcomeButton}) => {
 };
 
 Welcome.propTypes = {
-  onClickWelcomeButton: PropTypes.func.isRequired,
+  onWelcomeButtonClick: PropTypes.func.isRequired,
 };

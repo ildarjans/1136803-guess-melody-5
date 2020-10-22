@@ -19,10 +19,10 @@ export class Game extends React.PureComponent {
       step: 0,
     };
 
-    this._handleClickAnswer = this._handleClickAnswer.bind(this);
+    this._handleAnswerClick = this._handleAnswerClick.bind(this);
   }
 
-  _handleClickAnswer() {
+  _handleAnswerClick() {
     this.setState((prevState) => ({
       step: prevState.step + 1,
     }));
@@ -44,14 +44,14 @@ export class Game extends React.PureComponent {
         return (
           <GameGenreWrapped
             question={question}
-            onAnswer={this._handleClickAnswer}
+            onAnswer={this._handleAnswerClick}
           />
         );
       case GameType.ARTIST:
         return (
           <GameArtistWrapped
             question={question}W
-            onAnswer={this._handleClickAnswer}
+            onAnswer={this._handleAnswerClick}
           />
         );
     }

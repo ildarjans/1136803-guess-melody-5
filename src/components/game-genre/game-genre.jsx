@@ -1,9 +1,9 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
-import {CircleStyle} from "../../styles/circle-style";
 import {GameAnswer} from "../game-answer/game-answer";
 import {GenreQuestionPropTypes} from "../genre-prop-types/genre-quenstion";
+import {CircleStyle} from "../../styles/circle-style";
 
 export class GameGenre extends React.PureComponent {
   constructor(props) {
@@ -17,11 +17,11 @@ export class GameGenre extends React.PureComponent {
       ],
     };
 
-    this._handleChangeAnswer = this._handleChangeAnswer.bind(this);
+    this._handleAnswerChange = this._handleAnswerChange.bind(this);
     this._handleSubmit = this._handleSubmit.bind(this);
   }
 
-  _handleChangeAnswer(answers) {
+  _handleAnswerChange(answers) {
     this.setState(answers);
   }
 
@@ -73,7 +73,7 @@ export class GameGenre extends React.PureComponent {
                 <GameAnswer
                   answers={answers}
                   index={index}
-                  onChangeAnswer={this._handleChangeAnswer}
+                  onChangeAnswer={this._handleAnswerChange}
                 />
 
               </div>

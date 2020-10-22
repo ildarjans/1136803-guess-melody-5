@@ -15,7 +15,7 @@ export const App = ({questions}) => {
           render={({history}) => {
             return (
               <Welcome
-                onClickWelcomeButton={() => history.push(`/game`)}
+                onWelcomeButtonClick={() => history.push(`/game`)}
               />
             );
           }}
