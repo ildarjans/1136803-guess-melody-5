@@ -1,11 +1,11 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
-import {CircleStyle} from "../../styles/circle-style";
 import {ArtistInput} from "../artist-input/artist-input";
 import {ArtistQuestionPropTypes} from "../artist-prop-types/artist-question";
+import {CircleStyle} from "../../styles/circle-style";
 
-export const GameArtist = ({onAnswer, question}) => {
+export const GameArtist = ({onAnswer, question, renderPlayer}) => {
   return (
     <section className="game game--artist">
       <header className="game__header">
@@ -34,10 +34,9 @@ export const GameArtist = ({onAnswer, question}) => {
         <h2 className="game__title">Кто исполняет эту песню?</h2>
         <div className="game__track">
           <div className="track">
-            <button className="track__button track__button--play" type="button"/>
-            <div className="track__status">
-              <audio src={question.song.src}/>
-            </div>
+
+            {renderPlayer(question.song.src, 0)}
+
           </div>
         </div>
 
@@ -61,6 +60,7 @@ export const GameArtist = ({onAnswer, question}) => {
 };
 
 GameArtist.propTypes = {
+  renderPlayer: PropTypes.func.isRequired,
   onAnswer: PropTypes.func.isRequired,
   question: ArtistQuestionPropTypes.isRequired,
 };

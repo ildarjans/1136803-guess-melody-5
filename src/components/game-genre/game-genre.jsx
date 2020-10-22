@@ -17,11 +17,11 @@ export class GameGenre extends React.PureComponent {
       ],
     };
 
-    this._handleAnswerChange = this._handleAnswerChange.bind(this);
+    this._handleChangeAnswer = this._handleChangeAnswer.bind(this);
     this._handleSubmit = this._handleSubmit.bind(this);
   }
 
-  _handleAnswerChange(answers) {
+  _handleChangeAnswer(answers) {
     this.setState(answers);
   }
 
@@ -33,7 +33,7 @@ export class GameGenre extends React.PureComponent {
 
   render() {
     const {answers} = this.state;
-    const {question} = this.props;
+    const {question, renderPlayer} = this.props;
     return (
       <section className="game game--genre">
         <header className="game__header">
@@ -67,15 +67,13 @@ export class GameGenre extends React.PureComponent {
           >
             {question.answers.map((answer, index) => (
               <div className="track" key={`${index}-${answer.src}`}>
-                <button className="track__button track__button--play" type="button"/>
-                <div className="track__status">
-                  <audio src={answer.src}/>
-                </div>
+
+                {renderPlayer(answer.src, index)}
 
                 <GameAnswer
                   answers={answers}
                   index={index}
-                  onChangeAnswer={this._handleAnswerChange}
+                  onChangeAnswer={this._handleChangeAnswer}
                 />
 
               </div>
@@ -96,6 +94,7 @@ export class GameGenre extends React.PureComponent {
 }
 
 GameGenre.propTypes = {
+  renderPlayer: PropTypes.func.isRequired,
   onAnswer: PropTypes.func.isRequired,
   question: GenreQuestionPropTypes.isRequired,
 };
