@@ -1,12 +1,11 @@
 import React from "react";
 import {BrowserRouter, Switch, Route} from "react-router-dom";
-import PropTypes from "prop-types";
 import {Welcome} from "../welcome/welcome";
 import {Login} from "../login/login";
 import {Result} from "../result/result";
-import {Game} from "../game/game";
+import {GameConnect} from "../game/game";
 
-export const App = ({questions}) => {
+export const App = () => {
   return (
     <BrowserRouter>
       <Switch>
@@ -30,15 +29,9 @@ export const App = ({questions}) => {
           <Result isWin={false}/>
         </Route>
         <Route exact path="/game">
-          <Game
-            questions={questions}
-          />
+          <GameConnect/>
         </Route>
       </Switch>
     </BrowserRouter>
   );
-};
-
-App.propTypes = {
-  questions: PropTypes.array.isRequired,
 };
