@@ -1,9 +1,9 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
-import {CircleStyle} from "../../styles/circle-style";
 import {GameAnswer} from "../game-answer/game-answer";
 import {GenreQuestionPropTypes} from "../genre-prop-types/genre-quenstion";
+import {CircleStyle} from "../../styles/circle-style";
 
 export class GameGenre extends React.PureComponent {
   constructor(props) {
@@ -33,7 +33,7 @@ export class GameGenre extends React.PureComponent {
 
   render() {
     const {answers} = this.state;
-    const {question} = this.props;
+    const {question, renderPlayer} = this.props;
     return (
       <section className="game game--genre">
         <header className="game__header">
@@ -67,10 +67,8 @@ export class GameGenre extends React.PureComponent {
           >
             {question.answers.map((answer, index) => (
               <div className="track" key={`${index}-${answer.src}`}>
-                <button className="track__button track__button--play" type="button"/>
-                <div className="track__status">
-                  <audio src={answer.src}/>
-                </div>
+
+                {renderPlayer(answer.src, index)}
 
                 <GameAnswer
                   answers={answers}
@@ -96,6 +94,7 @@ export class GameGenre extends React.PureComponent {
 }
 
 GameGenre.propTypes = {
+  renderPlayer: PropTypes.func.isRequired,
   onAnswer: PropTypes.func.isRequired,
   question: GenreQuestionPropTypes.isRequired,
 };
