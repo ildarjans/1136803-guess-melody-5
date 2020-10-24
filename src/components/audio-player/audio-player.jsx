@@ -12,17 +12,17 @@ export class AudioPlayer extends React.PureComponent {
     this._audioRef = React.createRef();
     this._audio = null;
 
-    this._handleCanplaythrough = this._handleCanplaythrough.bind(this);
+    this._handleCanPlayThrough = this._handleCanPlayThrough.bind(this);
   }
 
-  _handleCanplaythrough() {
+  _handleCanPlayThrough() {
     this.setState({isLoading: false});
   }
 
   componentDidMount() {
     this._audio = this._audioRef.current;
     this._audio.src = this.props.song;
-    this._audio.oncanplaythrough = this._handleCanplaythrough;
+    this._audio.oncanplaythrough = this._handleCanPlayThrough;
   }
 
   componentWillUnmount() {
