@@ -1,69 +1,75 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Redirect} from "react-router-dom";
-import {GameArtist} from "../game-artist/game-artist";
-import {GameGenre} from "../game-genre/game-genre";
-import {withAudioPlayer} from "../../hocs/with-audio-player";
-import {GenreQuestionPropTypes} from "../genre-prop-types/genre-quenstion";
-import {ArtistQuestionPropTypes} from "../artist-prop-types/artist-question";
+import {connect} from "react-redux";
+import {Mistakes} from "../mistakes/mistakes";
+import {GameArtistWithAudioPlayer} from "../game-artist/game-artist";
+import {GameGenreWithAudioPlayer} from "../game-genre/game-genre";
+import {actionCreator} from "../../store/action-type";
+import {questionsPropTypes} from "../questions-prop-types/questions-prop-types";
 import {GameType} from "../../const";
 
-const GameGenreWrapped = withAudioPlayer(GameGenre);
-const GameArtistWrapped = withAudioPlayer(GameArtist);
+const Game = ({onUserAnswer, resetGame, questions, step, mistakes}) => {
+  if (step >= questions.length || !questions) {
+    resetGame();
 
-export class Game extends React.PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      step: 0,
-    };
-
-    this._handleAnswerClick = this._handleAnswerClick.bind(this);
-  }
-
-  _handleAnswerClick() {
-    this.setState((prevState) => ({
-      step: prevState.step + 1,
-    }));
-  }
-
-  render() {
-    const {questions} = this.props;
-    const {step} = this.state;
-    const question = questions[step];
-
-    if (step >= questions.length || !questions) {
-      return (
-        <Redirect to="/"/>
-      );
-    }
-
-    switch (question.type) {
-      case GameType.GENRE:
-        return (
-          <GameGenreWrapped
-            question={question}
-            onAnswer={this._handleAnswerClick}
-          />
-        );
-      case GameType.ARTIST:
-        return (
-          <GameArtistWrapped
-            question={question}W
-            onAnswer={this._handleAnswerClick}
-          />
-        );
-    }
     return (
       <Redirect to="/"/>
     );
+
   }
-}
+
+  switch (questions[step].type) {
+    case GameType.GENRE:
+      return (
+        <GameGenreWithAudioPlayer
+          question={questions[step]}
+          onAnswer={onUserAnswer}
+        >
+          <Mistakes count={mistakes}/>
+
+        </GameGenreWithAudioPlayer>
+      );
+    case GameType.ARTIST:
+      return (
+        <GameArtistWithAudioPlayer
+          question={questions[step]}
+          onAnswer={onUserAnswer}
+        >
+          <Mistakes count={mistakes}/>
+
+        </GameArtistWithAudioPlayer>
+      );
+
+  }
+  return (
+    <Redirect to="/"/>
+  );
+
+};
 
 Game.propTypes = {
-  questions: PropTypes.arrayOf(
-      PropTypes.oneOfType(
-          [GenreQuestionPropTypes, ArtistQuestionPropTypes]).isRequired
-  ).isRequired
+  questions: questionsPropTypes.isRequired,
+  onUserAnswer: PropTypes.func.isRequired,
+  resetGame: PropTypes.func.isRequired,
+  step: PropTypes.number.isRequired,
+  mistakes: PropTypes.number.isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  step: state.step,
+  mistakes: state.mistakes,
+  questions: state.questions
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  resetGame() {
+    dispatch(actionCreator.resetGame());
+  },
+  onUserAnswer(question, answer) {
+    dispatch(actionCreator.incrementStep());
+    dispatch(actionCreator.incrementMistake(question, answer));
+  }
+});
+
+export const GameConnect = connect(mapStateToProps, mapDispatchToProps)(Game);
