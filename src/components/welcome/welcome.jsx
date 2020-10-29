@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 import {MAX_ERROR_COUNT} from "../../const.js";
 
 export const Welcome = ({onWelcomeButtonClick}) => {

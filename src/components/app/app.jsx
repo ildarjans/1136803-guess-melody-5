@@ -1,9 +1,14 @@
 import React from "react";
-import {BrowserRouter, Switch, Route} from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Switch
+} from "react-router-dom";
+
 import {Welcome} from "../welcome/welcome";
 import {Login} from "../login/login";
 import {Result} from "../result/result";
-import {GameConnect} from "../game/game";
+import {Game} from "../game/game";
 
 export const App = () => {
   return (
@@ -29,7 +34,7 @@ export const App = () => {
           <Result isWin={false}/>
         </Route>
         <Route exact path="/game">
-          <GameConnect/>
+          <Game/>
         </Route>
       </Switch>
     </BrowserRouter>

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {ArtistQuestionPropTypes} from '../artist-prop-types/artist-question';
 import {ArtistAnswerPropTypes} from '../artist-prop-types/artist-answers';
 

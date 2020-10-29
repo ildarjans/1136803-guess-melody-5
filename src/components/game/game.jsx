@@ -2,14 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Redirect} from "react-router-dom";
 import {connect} from "react-redux";
-import {Mistakes} from "../mistakes/mistakes";
+
+import {actionCreator} from "../../store/action-type";
 import {GameArtistWithAudioPlayer} from "../game-artist/game-artist";
 import {GameGenreWithAudioPlayer} from "../game-genre/game-genre";
-import {actionCreator} from "../../store/action-type";
 import {questionsPropTypes} from "../questions-prop-types/questions-prop-types";
 import {GameType} from "../../const";
 
-const Game = ({onUserAnswer, resetGame, questions, step, mistakes}) => {
+import {Mistakes} from "../mistakes/mistakes";
+
+const GameComponent = ({onUserAnswer, resetGame, questions, step, mistakes}) => {
   if (step >= questions.length || !questions) {
     resetGame();
 
@@ -48,7 +50,7 @@ const Game = ({onUserAnswer, resetGame, questions, step, mistakes}) => {
 
 };
 
-Game.propTypes = {
+GameComponent.propTypes = {
   questions: questionsPropTypes.isRequired,
   onUserAnswer: PropTypes.func.isRequired,
   resetGame: PropTypes.func.isRequired,
@@ -72,4 +74,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 });
 
-export const GameConnect = connect(mapStateToProps, mapDispatchToProps)(Game);
+export const Game = connect(mapStateToProps, mapDispatchToProps)(GameComponent);

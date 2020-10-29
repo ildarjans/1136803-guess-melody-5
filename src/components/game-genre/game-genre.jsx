@@ -1,12 +1,14 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
-import {withAudioPlayer} from "../../hocs/with-audio-player";
-import {GameAnswer} from "../game-answer/game-answer";
+
 import {GenreQuestionPropTypes} from "../genre-prop-types/genre-quenstion";
 import {CircleStyle} from "../../styles/circle-style";
 
-export class GameGenre extends React.PureComponent {
+import {withAudioPlayer} from "../../hocs/with-audio-player";
+import {GameAnswer} from "../game-answer/game-answer";
+
+class GameGenre extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
