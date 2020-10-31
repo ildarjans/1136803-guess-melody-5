@@ -6,98 +6,79 @@ import {GenreQuestionPropTypes} from "../genre-prop-types/genre-quenstion";
 import {CircleStyle} from "../../styles/circle-style";
 
 import {withAudioPlayer} from "../../hocs/with-audio-player";
-import {GameAnswer} from "../game-answer/game-answer";
+import {withGameGenreAnswers} from "../../hocs/with-game-genre-answers";
+import {GameGenreTrack} from "../game-genre-track/game-genre-track";
 
-class GameGenre extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      answers: [
-        false,
-        false,
-        false,
-        false,
-      ],
-    };
+const GameGenre = (props) => {
+  const {
+    onAnswer,
+    onChange,
+    question,
+    renderPlayer,
+    userAnswers,
+    children
+  } = props;
+  return (
+    <section className="game game--genre">
+      <header className="game__header">
+        <Link className="game__back" to="/">
+          <span className="visually-hidden">Сыграть ещё раз</span>
+          <img className="game__logo" src="/img/melody-logo-ginger.png" alt="Угадай мелодию"/>
+        </Link>
 
-    this._handleAnswerChange = this._handleAnswerChange.bind(this);
-    this._handleSubmit = this._handleSubmit.bind(this);
-  }
+        <svg xmlns="http://www.w3.org/2000/svg" className="timer" viewBox="0 0 780 780">
+          <circle
+            className="timer__line"
+            cx="390"
+            cy="390"
+            r="370"
+            style={CircleStyle}
+          />
+        </svg>
 
-  _handleAnswerChange(answers) {
-    this.setState(answers);
-  }
+        {children}
 
-  _handleSubmit(evt) {
-    evt.preventDefault();
-    const {onAnswer, question} = this.props;
-    onAnswer(this.state.answers, question);
-  }
+      </header>
 
-  render() {
-    const {answers} = this.state;
-    const {question, renderPlayer, children} = this.props;
-    return (
-      <section className="game game--genre">
-        <header className="game__header">
-          <Link className="game__back" to="/">
-            <span className="visually-hidden">Сыграть ещё раз</span>
-            <img className="game__logo" src="img/melody-logo-ginger.png" alt="Угадай мелодию"/>
-          </Link>
+      <section className="game__screen">
+        <h2 className="game__title">Выберите {question.genre} мелодию</h2>
+        <form
+          className="game__tracks"
+          onSubmit={onAnswer}
+        >
+          {question.answers.map((answer, index) => (
 
-          <svg xmlns="http://www.w3.org/2000/svg" className="timer" viewBox="0 0 780 780">
-            <circle
-              className="timer__line"
-              cx="390"
-              cy="390"
-              r="370"
-              style={CircleStyle}
+            <GameGenreTrack
+              key={`${index}-${answer.src}`}
+              renderPlayer={renderPlayer}
+              onChange={onChange}
+              userAnswer={userAnswers[index]}
+              src={answer.src}
+              id={index}
             />
-          </svg>
 
-          {children}
-
-        </header>
-
-        <section className="game__screen">
-          <h2 className="game__title">Выберите {question.genre} мелодию</h2>
-          <form
-            className="game__tracks"
-            onSubmit={this._handleSubmit}
+          ))
+          }
+          <button
+            className="game__submit button"
+            type="submit"
           >
-            {question.answers.map((answer, index) => (
-              <div className="track" key={`${index}-${answer.src}`}>
+            Ответить
+          </button>
 
-                {renderPlayer(answer.src, index)}
-
-                <GameAnswer
-                  answers={answers}
-                  index={index}
-                  onChangeAnswer={this._handleAnswerChange}
-                />
-
-              </div>
-            ))
-            }
-            <button
-              className="game__submit button"
-              type="submit"
-            >
-              Ответить
-            </button>
-
-          </form>
-        </section>
+        </form>
       </section>
-    );
-  }
-}
+    </section>
+  );
+};
 
 GameGenre.propTypes = {
   renderPlayer: PropTypes.func.isRequired,
   children: PropTypes.element.isRequired,
   onAnswer: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   question: GenreQuestionPropTypes.isRequired,
+  userAnswers: PropTypes.arrayOf(PropTypes.bool.isRequired).isRequired,
 };
 
-export const GameGenreWithAudioPlayer = withAudioPlayer(GameGenre);
+export const GameGenreWithAudioPlayer = withAudioPlayer(withGameGenreAnswers(GameGenre));
