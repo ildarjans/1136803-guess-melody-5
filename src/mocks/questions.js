@@ -32,7 +32,7 @@ export const questions = [
     answers: [
       {
         picture: `${AVATAR_URL}/${Math.random()}`,
-        artist: `Fill Kirkoryan`
+        artist: `Brian May`
       },
       {
         picture: `${AVATAR_URL}/${Math.random()}`,
