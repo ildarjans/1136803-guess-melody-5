@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import {MAX_ERROR_COUNT} from "../../const.js";
+import {MAX_MISTAKES_COUNT} from "../../const.js";
 
 export const Welcome = ({onWelcomeButtonClick}) => {
   return (
@@ -21,7 +21,7 @@ export const Welcome = ({onWelcomeButtonClick}) => {
       <p className="welcome__text">Правила просты:</p>
       <ul className="welcome__rules-list">
         <li>Нужно ответить на все вопросы.</li>
-        <li>Можно допустить {MAX_ERROR_COUNT} ошибки.</li>
+        <li>Можно допустить {MAX_MISTAKES_COUNT} ошибки.</li>
       </ul>
       <p className="welcome__text">Удачи!</p>
     </section>
