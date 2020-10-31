@@ -27,11 +27,29 @@ export const App = () => {
         <Route exact path="/login">
           <Login/>
         </Route>
-        <Route exact path="/result">
-          <Result isWin={true}/>
+        <Route
+          exact path="/result"
+          render={({history}) => {
+            return (
+              <Result
+                onReplayButtonClick={() => history.push(`/game`)}
+                isWin={true}
+              />
+            );
+          }}
+        >
         </Route>
-        <Route exact path="/lose">
-          <Result isWin={false}/>
+        <Route
+          exact path="/lose"
+          render={({history}) => {
+            return (
+              <Result
+                onReplayButtonClick={() => history.push(`/game`)}
+                isWin={false}
+              />
+            );
+          }}
+        >
         </Route>
         <Route exact path="/game">
           <Game/>
