@@ -1,46 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {withAudio} from "../../hocs/with-audio";
 
-export class AudioPlayer extends React.PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isLoading: true,
-    };
-
-    this._audioRef = React.createRef();
-    this._audio = null;
-
-    this._handleCanPlayThrough = this._handleCanPlayThrough.bind(this);
-  }
-
-  _handleCanPlayThrough() {
-    this.setState({isLoading: false});
-  }
-
-  componentDidMount() {
-    this._audio = this._audioRef.current;
-    this._audio.src = this.props.song;
-    this._audio.oncanplaythrough = this._handleCanPlayThrough;
-  }
-
-  componentWillUnmount() {
-    this._audio.oncanplaythrough = null;
-  }
-
-  componentDidUpdate() {
-    if (this.props.isPlaying) {
-      this._audio.play();
-    } else {
-      this._audio.pause();
-    }
-  }
-
-  render() {
-    const {isLoading} = this.state;
-    const {isPlaying, onClickPlayButton} = this.props;
-    return (
+const AudioPlayerComponent = ({onClickPlayButton, isPlaying, isLoading, children}) => {
+  return (
       <>
         <button
           className={`track__button track__button--${isPlaying ? `pause` : `play`}`}
@@ -49,16 +12,17 @@ export class AudioPlayer extends React.PureComponent {
           onClick={onClickPlayButton}
         />
         <div className="track__status">
-          <audio
-            ref={this._audioRef}/>
+          {children}
         </div>
       </>
-    );
-  }
-}
-
-AudioPlayer.propTypes = {
-  isPlaying: PropTypes.bool.isRequired,
-  onClickPlayButton: PropTypes.func.isRequired,
-  song: PropTypes.string.isRequired
+  );
 };
+
+AudioPlayerComponent.propTypes = {
+  isPlaying: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  onClickPlayButton: PropTypes.func.isRequired,
+  children: PropTypes.element.isRequired
+};
+
+export const AudioPlayer = withAudio(AudioPlayerComponent);
