@@ -1,13 +1,15 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
-import {withAudioPlayer} from "../../hocs/with-audio-player";
+
 import {CircleStyle} from "../../styles/circle-style";
-import {ArtistInput} from "../artist-input/artist-input";
 import {ArtistQuestionPropTypes} from "../artist-prop-types/artist-question";
 
+import {ArtistInput} from "../artist-input/artist-input";
+import {withAudioPlayer} from "../../hocs/with-audio-player";
 
-export const GameArtist = ({onAnswer, question, renderPlayer, children}) => {
+
+const GameArtist = ({onAnswer, question, renderPlayer, children}) => {
   return (
     <section className="game game--artist">
       <header className="game__header">
