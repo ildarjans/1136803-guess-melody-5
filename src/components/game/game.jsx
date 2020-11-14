@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 import {MAX_MISTAKES_COUNT} from "../../const";
 import {GameType} from "../../const";
 import {questionsPropTypes} from "../questions-prop-types/questions-prop-types";
-import {actionCreator} from "../../store/action-type";
+import {actionCreator} from "../../store/actions";
 
 import {Mistakes} from "../mistakes/mistakes";
 import {GameArtistWithAudioPlayer} from "../game-artist/game-artist";
@@ -24,6 +24,7 @@ const GameComponent = ({onUserAnswer, questions, step, mistakes}) => {
     case GameType.GENRE:
       return (
         <GameGenreWithAudioPlayer
+          key={step}
           question={questions[step]}
           onAnswer={onUserAnswer}
         >
@@ -35,6 +36,7 @@ const GameComponent = ({onUserAnswer, questions, step, mistakes}) => {
       return (
         <GameArtistWithAudioPlayer
           question={questions[step]}
+          key={step}
           onAnswer={onUserAnswer}
         >
           <Mistakes count={mistakes}/>
@@ -56,10 +58,10 @@ GameComponent.propTypes = {
   mistakes: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  step: state.step,
-  mistakes: state.mistakes,
-  questions: state.questions
+const mapStateToProps = ({GAME, DATA}) => ({
+  step: GAME.step,
+  mistakes: GAME.mistakes,
+  questions: DATA.questions
 });
 
 const mapDispatchToProps = (dispatch) => ({
