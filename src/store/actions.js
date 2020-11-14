@@ -8,6 +8,9 @@ export const ActionType = {
   INCREMENT_STEPS: `INCREMENT_STEPS`,
   INCREMENT_MISTAKES: `INCREMENT_MISTAKES`,
   RESET_GAME: `RESET_GAME`,
+  LOAD_QUESTIONS: `LOAD_QUESTIONS`,
+  REQUIRED_AUTHORIZATION: `REQUIRED_AUTHORIZATION`,
+  REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`
 };
 
 export const actionCreator = {
@@ -35,4 +38,16 @@ export const actionCreator = {
   resetGame: () => ({
     type: ActionType.RESET_GAME,
   }),
+  loadQuestions: (questions) => ({
+    type: ActionType.LOAD_QUESTIONS,
+    payload: questions,
+  }),
+  setAuthorizationStatus: (status) => ({
+    type: ActionType.REQUIRED_AUTHORIZATION,
+    payload: status,
+  }),
+  redirectToRoute: (url) => ({
+    type: ActionType.REDIRECT_TO_ROUTE,
+    payload: url,
+  })
 };
