@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {ActionCreator} from "../../../../guess-melody-5/src/store/action";
+import {actionCreator} from "../../store/actions";
 
 export const ResultComponent = ({isWin, mistakes, step, onReplayButtonClick, resetGame}) => {
   const correctAnswers = step - mistakes;
@@ -52,14 +52,14 @@ ResultComponent.propTypes = {
   resetGame: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  mistakes: state.mistakes,
-  step: state.step,
+const mapStateToProps = ({GAME}) => ({
+  mistakes: GAME.mistakes,
+  step: GAME.step,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   resetGame() {
-    dispatch(ActionCreator.resetGame());
+    dispatch(actionCreator.resetGame());
   }
 });
 

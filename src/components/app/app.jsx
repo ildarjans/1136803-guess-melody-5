@@ -1,60 +1,74 @@
 import React from "react";
 import {
-  BrowserRouter,
+  Router,
   Route,
   Switch
 } from "react-router-dom";
+
+import {browserHistory} from "../../browse-history";
+import {AppRoute} from "../../const";
 
 import {Welcome} from "../welcome/welcome";
 import {Login} from "../login/login";
 import {Result} from "../result/result";
 import {Game} from "../game/game";
+import {PrivateRoute} from "../private-route/private-route";
 
 export const App = () => {
   return (
-    <BrowserRouter>
+    <Router history={browserHistory}>
       <Switch>
         <Route
-          exact path="/"
+          exact path={AppRoute.ROOT}
           render={({history}) => {
             return (
               <Welcome
-                onWelcomeButtonClick={() => history.push(`/game`)}
+                onWelcomeButtonClick={() => history.push(AppRoute.GAME)}
               />
             );
           }}
         />
-        <Route exact path="/login">
-          <Login/>
-        </Route>
         <Route
-          exact path="/result"
+          exact
+          path={AppRoute.LOGIN}
           render={({history}) => {
             return (
-              <Result
-                onReplayButtonClick={() => history.push(`/game`)}
-                isWin={true}
+              <Login
+                onReplayButtonClick={() => history.push(AppRoute.GAME)}
               />
             );
           }}
         >
         </Route>
-        <Route
-          exact path="/lose"
+        <PrivateRoute
+          exact
+          path={AppRoute.RESULT}
           render={({history}) => {
             return (
               <Result
-                onReplayButtonClick={() => history.push(`/game`)}
+                onReplayButtonClick={() => history.push(AppRoute.GAME)}
+                isWin={true}
+              />
+            );
+          }}
+        >
+        </PrivateRoute>
+        <Route
+          exact path={AppRoute.LOSE}
+          render={({history}) => {
+            return (
+              <Result
+                onReplayButtonClick={() => history.push(AppRoute.GAME)}
                 isWin={false}
               />
             );
           }}
         >
         </Route>
-        <Route exact path="/game">
+        <Route exact path={AppRoute.GAME}>
           <Game/>
         </Route>
       </Switch>
-    </BrowserRouter>
+    </Router>
   );
 };

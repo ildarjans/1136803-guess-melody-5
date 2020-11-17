@@ -5,3 +5,21 @@ export const GameType = {
   ARTIST: `artist`
 };
 
+export const AuthorizationStatus = {
+  AUTH: `AUTH`,
+  NO_AUTH: `NO_AUTH`,
+};
+
+
+export const AppRoute = {
+  RESULT: `/result`,
+  ROOT: `/`,
+  GAME: `/game`,
+  LOSE: `/lose`,
+  LOGIN: `/login`,
+};
+
+export const ApiRoute = {
+  LOGIN: `/login`,
+  QUESTIONS: `/questions`,
+};
